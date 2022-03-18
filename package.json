@@ -26,5 +26,8 @@
     "ts-node": "^10.7.0",
     "tsc-watch": "^4.6.2",
     "typedoc": "^0.22.13"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2"
   }
 }

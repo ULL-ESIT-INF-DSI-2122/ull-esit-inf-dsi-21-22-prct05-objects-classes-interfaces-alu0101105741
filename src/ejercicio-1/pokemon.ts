@@ -15,15 +15,15 @@ interface stats {
  */
 export class Pokemon implements stats {
   /**
-   * asd
-  * @param {string} nombre asd
-  * @param {number} peso asd
-  * @param {number} altura asd
-  * @param {Tipo} tipo asd
-  * @param {number} ataque asd
-  * @param {number} defensa asd
-  * @param {number} velocidad asd
-  * @param {number} HP asd
+   * Constructor of our class pokemon that initialize all the stats and different info about our pokemon
+  * @param {string} nombre Name of our pokemon
+  * @param {number} peso Weight of our pokemon
+  * @param {number} altura Height of our pokemon
+  * @param {Tipo} tipo Type of our pokemon
+  * @param {number} ataque Attack stat of our pokemon
+  * @param {number} defensa Defense stat of our pokemon
+  * @param {number} velocidad Speed stat of our pokemon
+  * @param {number} HP Health Points of our pokemon
    */
   constructor(public nombre: string,
               public peso: number,

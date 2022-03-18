@@ -5,13 +5,13 @@ import {Pokemon} from './pokemon';
  */
 export class Pokedex {
   /**
-   * asd
-   * @param {Pokemon} pokemons asd
+   * Constructor of the class Pokedex that allow us to have an array of Pokemons
+   * @param {Pokemon} pokemons Array that contains the pokemons of our pokedex
    */
   constructor(public pokemons: Pokemon[]) {}
 
   /**
-   * asd
+   * Function that allow us to add an extra pokemon to our pokedex
    * @param {Pokemon} pokemon asd
    */
   addPokemon(pokemon: Pokemon) {
@@ -19,7 +19,7 @@ export class Pokedex {
   }
 
   /**
-   * asd
+   * Function that return us the pokemons of our pokedex
    * @return {Pokemon[]} asd
    */
   getPokemons(): Pokemon[] {

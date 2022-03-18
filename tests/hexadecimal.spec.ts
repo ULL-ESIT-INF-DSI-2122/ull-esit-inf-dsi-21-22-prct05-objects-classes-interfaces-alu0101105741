@@ -5,10 +5,12 @@ import {Hexadecimal} from '../src/modificacion/hexadecimal';
 describe('Test block on modification (Hexadecimal)', () => {
   const hexUno: Hexadecimal = new Hexadecimal(255);
   const hexDos: Hexadecimal = new Hexadecimal(100);
+  const hexTres: Hexadecimal = new Hexadecimal(11259375);
 
   it('toSring() method', () => {
     expect(hexUno.toString()).to.be.equal('0xFF');
     expect(hexDos.toString()).to.be.equal('0x64');
+    expect(hexTres.toString()).to.be.equal('0xABCDEF');
   });
 
   it('valueOf() method', () => {
@@ -28,6 +30,7 @@ describe('Test block on modification (Hexadecimal)', () => {
 
   it('parse() method', () => {
     expect(hexUno.parse('0x26')).to.be.equal(38);
+    expect(hexUno.parse('0xABCDEF')).to.be.equal(11259375);
     expect(hexUno.parse('0x9B')).to.be.equal(155);
   });
 });

@@ -5,37 +5,49 @@ import {Pokemon} from './pokemon';
  */
 export class Combat {
   /**
-   * asd
-   * @param {Pokemon} contrincanteUno asd
-   * @param {Pokemon} contrincanteDos asd
+   * Constructor of our class combat that allow us to simulate a combat given two pokemons
+   * @param {Pokemon} contrincanteUno First pokemon to fight
+   * @param {Pokemon} contrincanteDos Second pokemon to fight
    */
   constructor(public contrincanteUno: Pokemon,
               public contrincanteDos: Pokemon) {}
 
   /**
-   * asd
+   * Start function that start the combat between our pokemon
    */
   start() {
     let i: number = 0;
+    console.log(`Empezamos el combate, vida de los diferentes contrincantes (${this.contrincanteUno.nombre}: ${this.contrincanteUno.HP}. ${this.contrincanteDos.nombre}: ${this.contrincanteDos.HP})\n`);
+
     while (this.contrincanteUno.HP > 0 && this.contrincanteDos.HP > 0) {
       if (i % 2 === 0) {
         this.contrincanteDos.HP -= this.pokemonTrainer(this.contrincanteUno, this.contrincanteDos);
-        console.log(`Vida del primer contrincante: ${this.contrincanteUno.HP}
-                    Vida del segundo contrincante: ${this.contrincanteDos.HP}`);
+        console.log(`TURNO ${i + 1}:\nVida del primer contrincante (${this.contrincanteUno.nombre}): ${this.contrincanteUno.HP}\nVida del segundo contrincante (${this.contrincanteDos.nombre}): ${this.contrincanteDos.HP}\n`);
       } else {
         this.contrincanteUno.HP -= this.pokemonTrainer(this.contrincanteDos, this.contrincanteUno);
-        console.log(`Vida del primer contrincante: ${this.contrincanteUno.HP}
-                    Vida del segundo contrincante: ${this.contrincanteDos.HP}`);
+        console.log(`TURNO ${i + 1}:\nVida del primer contrincante (${this.contrincanteUno.nombre}): ${this.contrincanteUno.HP}\nVida del segundo contrincante (${this.contrincanteDos.nombre}): ${this.contrincanteDos.HP}\n`);
       }
       i++;
     }
   }
 
   /**
-   * asd
-   * @param {Pokemon} contrincanteUno asd
-   * @param {Pokemon} contrincanteDos asd
-   * @return {number} asd
+   * Function that will allow us to check if the combat ended with a pokemon with no HP
+   * @return {number} Lowest HP value of our pokemon
+   */
+  lowestHP(): number {
+    if (this.contrincanteUno.HP < this.contrincanteDos.HP) {
+      return this.contrincanteUno.HP;
+    } else {
+      return this.contrincanteDos.HP;
+    }
+  }
+
+  /**
+   * Function that allow us to calculate the damage done by a pokemon to the other one
+   * @param {Pokemon} contrincanteUno Pokemon that attacks
+   * @param {Pokemon} contrincanteDos Pokemon that deffends
+   * @return {number} Number of HP that the first pokemon deals to the second
    */
   pokemonTrainer(contrincanteUno: Pokemon, contrincanteDos: Pokemon): number {
     return 50 * (contrincanteUno.ataque / contrincanteDos.defensa) *
@@ -52,19 +64,15 @@ export class Combat {
     switch (firstType) {
       case 'fuego': {
         return this.fuegoEffectiveness(sencondType);
-        break;
       }
       case 'agua': {
         return this.aguaEffectiveness(sencondType);
-        break;
       }
       case 'hierba': {
         return this.hierbaEffectiveness(sencondType);
-        break;
       }
       case 'electrico': {
         return this.electricoEffectiveness(sencondType);
-        break;
       }
     }
   }
@@ -78,15 +86,12 @@ export class Combat {
     switch (sencondType) {
       case 'agua': {
         return 0.5;
-        break;
       }
       case 'hierba': {
         return 2;
-        break;
       }
       case 'electrico': {
         return 1;
-        break;
       }
     }
   }
@@ -100,15 +105,12 @@ export class Combat {
     switch (sencondType) {
       case 'fuego': {
         return 2;
-        break;
       }
       case 'hierba': {
         return 0.5;
-        break;
       }
       case 'electrico': {
         return 0.5;
-        break;
       }
     }
   }
@@ -122,15 +124,12 @@ export class Combat {
     switch (sencondType) {
       case 'fuego': {
         return 0.5;
-        break;
       }
       case 'agua': {
         return 2;
-        break;
       }
       case 'electrico': {
         return 1;
-        break;
       }
     }
   }
@@ -144,15 +143,12 @@ export class Combat {
     switch (sencondType) {
       case 'fuego': {
         return 1;
-        break;
       }
       case 'agua': {
         return 2;
-        break;
       }
       case 'hierba': {
         return 1;
-        break;
       }
     }
   }
