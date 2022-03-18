@@ -4,7 +4,7 @@ import chalk = require('chalk');
 import {Ficha} from '../src/ejercicio-2/ficha';
 import {Jugador} from '../src/ejercicio-2/jugador';
 import {Rejilla} from '../src/ejercicio-2/rejilla';
-import {Conecta4} from '../src/ejercicio-2/conecta4';
+// import {Conecta4} from '../src/ejercicio-2/conecta4';
 
 describe('Test block on Conecta 4 exercise', () => {
   const ficha1: Ficha = new Ficha('rojo', 'X');
@@ -34,10 +34,12 @@ describe('Test block on Conecta 4 exercise', () => {
 
   it('Rejilla checkHorizontal() method', () => {
     expect(rejilla1.checkHorizontal(2, 2, ficha1.symbol)).to.be.equal(false);
+    expect(rejilla2.checkHorizontal(2, 2, ficha1.symbol)).to.be.equal(true);
   });
 
   it('Rejilla checkVertical() methods', () => {
     expect(rejilla1.checkVertical(2, 2, ficha1.symbol)).to.be.equal(false);
+    expect(rejilla2.checkVertical(2, 2, ficha1.symbol)).to.be.equal(true);
   });
 
   // it('Rejilla checkDiagonal() methods', () => {
