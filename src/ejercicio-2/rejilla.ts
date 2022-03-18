@@ -28,10 +28,6 @@ export class Rejilla {
     for (let i = 0; i < this.rejilla.length; i++) {
       if (this.rejilla[i][column] === undefined) {
         full = false;
-      } else {
-        if (this.rejilla[i][column].symbol === '') {
-          full = false;
-        }
       }
     }
 
