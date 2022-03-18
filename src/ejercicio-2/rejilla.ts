@@ -4,12 +4,18 @@ import {Ficha} from './ficha';
  * asd
  */
 export class Rejilla {
+  // public rejilla: Ficha[][];
   public rejilla: Ficha[][];
+
 
   /**
    * asd
    */
-  constructor() {}
+  constructor() {
+    const columns: Ficha[] = new Array<Ficha>(6);
+
+    this.rejilla = [columns, columns, columns, columns, columns, columns, columns];
+  }
 
   /**
    * asd
@@ -20,8 +26,12 @@ export class Rejilla {
     let full: boolean = true;
 
     for (let i = 0; i < this.rejilla.length; i++) {
-      if (this.rejilla[i][column].symbol == '') {
+      if (this.rejilla[i][column] === undefined) {
         full = false;
+      } else {
+        if (this.rejilla[i][column].symbol === '') {
+          full = false;
+        }
       }
     }
 
@@ -40,18 +50,22 @@ export class Rejilla {
     let consecutive: number = 0;
 
     while (pivotHorizontal >= 0 && consecutive < 4) {
-      if (this.rejilla[row][pivotHorizontal].symbol === symbol) {
-        consecutive++;
+      if (this.rejilla[row][pivotHorizontal] !== undefined) {
+        if (this.rejilla[row][pivotHorizontal].symbol === symbol) {
+          consecutive++;
+        }
       }
 
-      pivotHorizontal++;
+      pivotHorizontal--;
     }
 
-    pivotHorizontal = column - 1;
+    pivotHorizontal = column + 1;
 
     while (pivotHorizontal < this.rejilla[row].length && consecutive < 4) {
-      if (this.rejilla[row][pivotHorizontal].symbol === symbol) {
-        consecutive++;
+      if (this.rejilla[row][pivotHorizontal] !== undefined) {
+        if (this.rejilla[row][pivotHorizontal].symbol === symbol) {
+          consecutive++;
+        }
       }
 
       pivotHorizontal++;
@@ -76,18 +90,22 @@ export class Rejilla {
     let consecutive: number = 0;
 
     while (pivotVertical >= 0 && consecutive < 4) {
-      if (this.rejilla[pivotVertical][column].symbol === symbol) {
-        consecutive++;
+      if (this.rejilla[pivotVertical][column] !== undefined) {
+        if (this.rejilla[pivotVertical][column].symbol === symbol) {
+          consecutive++;
+        }
       }
 
-      pivotVertical++;
+      pivotVertical--;
     }
 
-    pivotVertical = row - 1;
+    pivotVertical = row + 1;
 
     while (pivotVertical < this.rejilla.length && consecutive < 4) {
-      if (this.rejilla[pivotVertical][column].symbol === symbol) {
-        consecutive++;
+      if (this.rejilla[pivotVertical][column] !== undefined) {
+        if (this.rejilla[pivotVertical][column].symbol === symbol) {
+          consecutive++;
+        }
       }
 
       pivotVertical++;
