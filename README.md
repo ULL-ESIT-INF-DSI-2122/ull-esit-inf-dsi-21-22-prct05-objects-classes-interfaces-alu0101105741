@@ -198,6 +198,195 @@ export class Ficha {
 ```
 
 #### Jugador
-En esta clase 
+Esta clase también se trata de una clase muy sencilla por lo que no realizaremos casi comentarios sobre ella ya que solo se trata de una clase que nos servirá para almacenar el número de fichas de cada jugador y sus características, además crearemos una clase que nos servirá para checkear rápidamente si nuestro jugador rodavía cuenta con fichas disponibles:
+
+```TypeScript
+import {Ficha} from './ficha';
+
+export class Jugador {
+  public numeroFichas: number = 21;
+
+  constructor(public ficha: Ficha) {}
+
+  enoughtTokens(): boolean {
+    if (this.numeroFichas > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+```
+
+#### Rejilla
+Esta se trata de la clase más compleja ya que es donde se encuentran todas las comprobaciones de victoria, estados de la rejilla y diferentes acciones que se pueden realizar sobre ella:
+
+```TypeScript
+import {Ficha} from './ficha';
+import {Jugador} from './jugador';
+import scanf = require('scanf');
+
+export class Rejilla {
+  public rejilla: Ficha[][];
+
+
+  constructor() {
+    const columns: Ficha[] = new Array<Ficha>(6);
+
+    this.rejilla = [columns, columns, columns, columns, columns, columns, columns];
+  }
+
+  addColumn(column: number, jugador: Jugador) {
+    if (!this.fullColumn(column) && column >= 0 && column < 7) {
+      let i = this.rejilla.length - 1;
+      while (this.rejilla[i][column] !== undefined) {
+        i--;
+      }
+
+      this.rejilla[i][column] = jugador.ficha;
+      console.log('Valor añadido: test add column', this.rejilla[0][column], this.rejilla[1][column], this.rejilla[2][column], this.rejilla[3][column], this.rejilla[4][column], this.rejilla[5][column]);
+    } else {
+      console.error(`La columna ${column} está llena o fuera de rango, seleccione otra columna [0, 6]: `);
+      const columna = scanf('%d');
+      this.addColumn(columna, jugador);
+    }
+  }
+
+  fullColumn(column: number): boolean {
+    if (this.rejilla[0][column] === undefined) {
+      return false;
+    } else {
+      console.log('columna llena', this.rejilla[0][column].symbol, this.rejilla[1][column].symbol, this.rejilla[2][column].symbol, this.rejilla[3][column].symbol, this.rejilla[4][column].symbol, this.rejilla[5][column].symbol);
+    }
+
+    return true;
+  }
+
+  checkHorizontal(row: number, column: number, symbol: string): boolean {
+    let pivotHorizontal: number = column;
+    let consecutive: number = 0;
+
+    while (pivotHorizontal >= 0 && consecutive < 4) {
+      if (this.rejilla[row][pivotHorizontal] !== undefined) {
+        if (this.rejilla[row][pivotHorizontal].symbol === symbol) {
+          consecutive++;
+          pivotHorizontal--;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+
+    pivotHorizontal = column + 1;
+
+    while (pivotHorizontal < this.rejilla[row].length && consecutive < 4) {
+      if (this.rejilla[row][pivotHorizontal] !== undefined) {
+        if (this.rejilla[row][pivotHorizontal].symbol === symbol) {
+          consecutive++;
+          pivotHorizontal++;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+
+    if (consecutive >= 4) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  checkVertical(row: number, column: number, symbol: string): boolean {
+    let pivotVertical: number = column;
+    let consecutive: number = 0;
+
+    while (pivotVertical >= 0 && consecutive < 4) {
+      if (this.rejilla[pivotVertical][column] !== undefined) {
+        if (this.rejilla[pivotVertical][column].symbol === symbol) {
+          consecutive++;
+          pivotVertical--;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+
+    pivotVertical = row + 1;
+
+    while (pivotVertical < this.rejilla.length && consecutive < 4) {
+      if (this.rejilla[pivotVertical][column] !== undefined) {
+        if (this.rejilla[pivotVertical][column].symbol === symbol) {
+          consecutive++;
+          pivotVertical++;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+
+    if (consecutive >= 4) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  checkDiagonal(row: number, column: number, symbol: string): boolean {
+    return false;
+  }
+
+  reset() {
+    this.rejilla = [];
+  }
+}
+```
+
+Como podemos observar no nos ha dado tiempo a terminarla pero tenemos la mayoría de las funciones desarrolladas:
+* El constructor nos inicializará nuestra rejilla para que cuente con 6 filas y 7 columnas que irán rellenas de fichas
+* La función ```fullColumn()``` nos permitirá comprobar si una columna se encuentra llena, es decir, que se han introducido fichas en todos los espacios de dicha columna.
+* La función ```addColumn()``` servirá para que pasado el número de la columna a introducir nuestra fichas y el jugador que realiza dicho movimiento nos introduzca en dicha columna una ficha con las carácterísticas de dicho jugaro, en caso de que la columna se encuentre llena, pedirá que se le introduzca otro número de columna.
+* Las funciones ```checkHorizontal(), checkVertical() y checkDiagonal()``` sirven para lo mismo, comprobar si se ha producido un 4 en raya pero en diferentes casos, la función ```checkHorizontal()``` recibirá dónde se ha introducido la última ficha y comprobará sus adyascentes en la misma fila hasta encontrar algún símbolo que no sea el mísmo que se ha introducido, en caso de que se hayan encontrado 4 o más valores consecutivos se devolverá que se trata de un 4 en raya. Las funciones ```checkVertical()``` y ```checkDiagonal()``` siguen el mismo desarrollo pero comprobando columnas y diagonales respectivamente.
+* Por último contamos con la función reset que lo que hará será resetear nuestra rejilla para dejarla preparada para el siguiente juego.
+
+#### Conecta4
+Esta función es donde se manejará todo lo relacionado a la partida (inicio de la misma, qué jugador juega cada turno, ejecutar la comprobación de final cada turno, resetear los valores, etc). Como podemos observar casi no hemos realizado nada de esta clase por falta de tiempo por lo que explicaré las pequeñas cosas que hemos realizado:
+
+```TypeScript
+import {Jugador} from './jugador';
+import {Rejilla} from './rejilla';
+
+/**
+ * Conecta4 class
+ */
+export class Conecta4 {
+  public final = false;
+  constructor(public rejilla: Rejilla, public jugador1: Jugador, public jugador2: Jugador) {}
+
+  start() {
+
+  }
+
+  isFinished(): boolean {
+    return this.final;
+  }
+
+  reset() {
+    this.rejilla.reset();
+    this.final = false;
+  }
+}
+```
+
+Como podemos ver no hemos realizado la función ```start()``` por lo que no podemos realizar el juego, pero como podemos ver el constructor necesita una rejilla y dos jugadores para poder comenzar el juego, además contamos con un booleano que servirá para poder comprobar si el juego ya ha terminado y ahorrarnos llamadas a la función start() si ya nos encontramos ante un juego finalizado. La idea de esto era al realizar las comprobaciones pertinentes al lanzar una ficha, en caso de que se tratase de una victoria poner este booleano a true para que no nos dejase ejecutar otra partida hasta resetear el tablero, la función ```isFinished()``` nos devolverá el valor de dicho booleano y la función ```reset()``` reseteara dichos valores.
 
 ## Conclusiones
+Esta práctica se trata de una práctica muy entretenida pero por diversos factores externos he carecido del tiempo para desarrollarla como me hubiese gustado y no he podido terminarla. La idea al completarla sería dejar todos nuestros atributos de clase en privado y crear diferentes métodos para acceder a ellos y modificarlos para poder asegurar un poco más la integridad del funcionamiento. También me hubiese gustado añadir un poco más de funcionalidades pero no ha sido posible.
