@@ -3,19 +3,19 @@ import chalk = require('chalk');
 export type colorFicha = ('rojo' | 'amarillo');
 
 /**
- * asd
+ * Ficha class
  */
 export class Ficha {
   /**
-   * asd
+   * Constructor of the ficha class, with a color and a symbol we create the token of the player
    * @param {string} symbol asd
    * @param {colorFicha} color asd
    */
   constructor(public color: colorFicha, public symbol: string = '') {}
 
   /**
-   * sd
-   * @return {chalk.Chalk} asd
+   * Print function that allow us to prin our token with his correspondient colour and symbol on console
+   * @return {chalk.Chalk} Chalk output that allow us to see the color on the console
    */
   print() {
     switch (this.color) {

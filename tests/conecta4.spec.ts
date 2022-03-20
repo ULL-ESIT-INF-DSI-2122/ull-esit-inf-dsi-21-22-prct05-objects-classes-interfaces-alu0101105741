@@ -32,13 +32,18 @@ describe('Test block on Conecta 4 exercise', () => {
     expect(rejilla2.fullColumn(2)).to.be.equal(true);
   });
 
+  it('Rejilla addColumn() method', () => {
+    rejilla1.addColumn(2, jugador1);
+    expect(rejilla1.fullColumn(2)).to.be.equal(true);
+  });
+
   it('Rejilla checkHorizontal() method', () => {
     expect(rejilla1.checkHorizontal(2, 2, ficha1.symbol)).to.be.equal(false);
     expect(rejilla2.checkHorizontal(2, 2, ficha1.symbol)).to.be.equal(true);
   });
 
   it('Rejilla checkVertical() methods', () => {
-    expect(rejilla1.checkVertical(2, 2, ficha1.symbol)).to.be.equal(false);
+    expect(rejilla1.checkVertical(2, 3, ficha1.symbol)).to.be.equal(false);
     expect(rejilla2.checkVertical(2, 2, ficha1.symbol)).to.be.equal(true);
   });
 
