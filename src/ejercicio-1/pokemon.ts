@@ -1,12 +1,19 @@
+/**
+ * Possible tipes of our pokemons
+ */
 type Tipo = ('fuego' | 'agua' | 'hierba' | 'electrico');
 
 /**
  * Interface Stats
  */
 interface stats {
+  /** Attack stat */
   ataque: number,
+  /** Deffense stat */
   defensa: number,
+  /** Speed stat */
   velocidad: number,
+  /** HP values */
   HP: number
 }
 

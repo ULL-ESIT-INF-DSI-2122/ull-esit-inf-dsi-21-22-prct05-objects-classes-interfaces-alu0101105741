@@ -199,5 +199,5 @@ export class Ficha {
 
 #### Jugador
 En esta clase 
+
 ## Conclusiones
-Esta ha sido una práctica muy entretenida y que me ha ayudado a familiarizarme bastante con TypeScript y sus tipos de datos ya que han sido unos ejercicios variados e interesantes. Aunque no he puesto en práctica los conocimientos sobre tuplas (ya que no he visto necesario su uso en ninguno de los ejercicios) también he podido aprender sobre dicho tipo de datos para usarlos en prácticas futuras. Por último, no cabe a destacar ningún problema con el desarrollo de la práctica.
